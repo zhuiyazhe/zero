@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    </head>
+    <body>
+        <nav style="display:none">
+            <ol id="navi">
+                <li title="QTreeWidgetItem_setCheckState">setCheckState错误</li>
+            </ol>
+        </nav>
+        <section>
+            <a name="QTreeWidgetItem_setCheckState"/>
+            <header>1.Qt Desigener在继承QTreeWidget自定义控件时，生成QTreeWidgetItem::setCheckState错误。（自定义Designer 插件）</header>
+            <article>
+                <p>
+                    在编写Qt的自定义控件时，有个需求是在QTreeWidget的基础上添加在Qt Designer中显示的可编辑属性m_fileName,自定义的控件加载该属性对应的
+                    文件，解析文件中的内容生成QTreeWidgetItem，并通过QTreeWidgetItem::setCheckState(0, Qt::unchecked)设置该Item的check属性，在开发过程
+                    中发现该控件所在ui生成的对应的头文件，会在setupUi中生成所有的m_fileName文件中的对应的item(通过new QTreeWidgetItem)，而不是如期望的在
+                    程序运行的时候，调用自定义的函数解析m_fileName再生成相关item，且自动生成的文件在生成setCheckState函数时会生成错误的setCheckState(Qt::unchecked)
+                    函数，且该类并没有此签名的函数。
+                </p>
+                <p>
+                    为了解决自动生成头文件时会同时创建所有的item而不是单单在程序运行时动态解析文件生成所有的item，首先的想法就是能不能判断该控件时在Qt Designer中实例化,
+                    还是在其他程序中实例化的，如果是在Designer中实例化的，则在设置m_fileName的值时，不调用对应的解析函数，在其他程序中实例化时再调用对应的解析函数，这样
+                    就不会在uic程序解析.ui文件时，自动生成所有的item了，同时也就不会生成setCheckState函数调用，也算是解决此问题了。
+                </p>
+                <p>
+                    接下来就是如何区分是在Designer程序中还是在其他程序中了，自己想到的办法就是在m_fileName对应的设置函数中添加判断，判断this所在的所有父对象，通过
+                    实验发现在Designer中this所在的父对象名称有“formContainer”与“MDIWindow“（父对象名称可能会由于Designer版本的不同，而不同），因此来判断这两个字
+                    符串来区分Designer程序与其他程序。
+                </p>
+                <p>
+                    还不清楚为什么会产生该错误，可能通过uic的源码会有提示。
+                </p>
+                <p>
+                        2018年11月26日  星期一  狗年十月十九    21: 43: 15
+                </p>
+            </article>
+
+        </section>
+        <section>
+            <div style="width:20px; height:1024px;">
+</div>
+            <p>
+                "xxx" </p>
+            <a name="test"></a>
+        </section>
+    </body>
+</html>
