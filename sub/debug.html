@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    </head>
+    <body>
+        <nav style="display:none">
+            <ol id="navi">
+                <li title="undefinedReference">Undefined reference error</li>
+                <li title="test">test</li>
+            </ol>
+        </nav>
+        <section>
+            <a name="undefinedReference"/>
+            <header>1.Undefined reference error</header>
+            <article>
+                <p>
+                    出现该错误是由于连接器找不到相关符号的定义，可能发生这种错误的情况有： </p>
+                <ol>
+                    <li>忘了在源文件/库中定义该符号</li>
+                    <li>定义了与期望不符的符号</li>
+                </ol>
+                <p>
+                    对于第一种情况就比较容易解决，将忘了定义的符号在源文件中定义即可。 </p>
+                <p>
+                    对于第二种情况则可能会有些稍微麻烦。简单说一下我曾经遇到过该错误的一种情形：当时出现这种错误时的情形是，在其他源文件中对函数start的调用都可以正确的连接，但唯独在一个源文件中报找不到start函数的定义，就对这种情形感到很诧异，因为和其他源文件中对该函数的调用是一样的，唯独这个源文件中会出错，当时想到可能是库的连接顺序有问题，但更改了连接顺序后，该错误还是一直的存在，期间一直猜测各种可能的情况，但还是解决不了该问题。到最后在看了好几遍报的错误的时候，才意识到是函数的签名可能有问题，因为该函数的参数设置的是int类型，但报错时提示的是找不到long类型的参数。这个时候以为是传参时传入了一个long类型的参数导致的错误，可并不是这样。事实是，在声明该函数时用的是一个宏定义(#define INT32 int)，但在该源文件中，由于包含的以他文件中也有该宏定义，但内容不同(#define INT32 long)，导致该函数的声明头文件被解析成了long类型，但该函数在编译的时候是按照int类型来编译的，所以导致找不到该函数的定义。 </p>
+            </article>
+        </section>
+        <section>
+            <div style="width:20px; height:1024px;">
+</div>
+            <p>
+                "xxx" </p>
+            <a name="test"></a>
+        </section>
+    </body>
+</html>
