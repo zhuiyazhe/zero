@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <link href="sub.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <nav style="display:none">
+            <ol id="navi">
+                <li title="qtCreatorGdb">Qt Creator Debug</li>
+                <li title="gdb1"> gdb中调用函数 </li>
+            </ol>
+        </nav>
+        <section>
+            <a name="qtCreatorGdb"/>
+            <header>1.使用Qt Creator调试时调用gdb命令</header>
+            <article>
+                <p>
+                    图形界面的调试与命令行调试相比方便了很多，但也受到了很多的限制。一些很方便的调试命令在图形界面
+                    中无法使用，无形中增加了调试的复杂。下面简单说下如何在Qt creator中调出gdb的命令输入接口。
+                  </p>
+                <img src="img/qtGdb.png" />
+
+                <ol>
+                  <li>
+                    首先点击1处的按钮view，在弹出的对话框中选中 debug log，在《调试》中时才有此选项（qt 5.9）。
+                    即可显示处gdb 调试日志及命令输入接口。
+                  </li>
+                  <li>
+                    接下来就可以在2处的输入窗口处输入gdb的命令进行调试。
+                  </li>
+                </ol>
+                <p>2018年11月29日 22:02:43</p>
+                </article>
+        </section>
+        <section>
+          <a name="gdb1"/>
+          <header>2.在调试过程中，通过gdb命令调用程序的某一函数</header>
+          <article>
+              <p>
+                  最近在做一个开发项目的时候，发现一位老师在调试程序的时候使用gdb命令调用程序中的某一函数，使函数运行，或许函数的运行
+                  结果。感觉这种方法挺不错的。
+                </p>
+              <p>
+                既然可以在调试过程中调用被调试程序中的函数，那么我们就可以在程序中专门写一些输出程序状态的函数，这些函数不影响程序的
+                内部状态。所以不会对程序造成影响。这样当我们调试程序时，如果我们想要了解程序的一些状态，而又不能通过端点，等方法获取
+                到当前程序的状态，那么我们就可以通过调用这些函数来获取当前程序的状态，非常有利于当前程序的调试与排错。
+              </p>
+              <p>2018年11月29日 22:12:19</p>
+              </article>
+        </section>
+    </body>
+</html>
