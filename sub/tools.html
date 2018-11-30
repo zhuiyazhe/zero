@@ -9,6 +9,7 @@
             <ol id="navi">
                 <li title="qtCreatorGdb">Qt Creator Debug</li>
                 <li title="gdb1"> gdb中调用函数 </li>
+                <li title="gdbserver1"> gdbserver远程调试</li>
             </ol>
         </nav>
         <section>
@@ -49,5 +50,38 @@
               <p>2018年11月29日 22:12:19</p>
               </article>
         </section>
+        <article>
+          <a name="gdbserver1" />
+          <header>3. 通过gdbserver远程调试程序</header>
+          <p>
+            在嵌入式程序开发中，一般我们调试程序会通过远程调试的方式。下面简单介绍一下gdb远程调试的方法。主要是使用
+            gdbserver通过网络调试的两种方式。
+          </p>
+          <ol>
+            <li>通过gdbserver直接启动待调试的程序</li>
+            <li>使用gdbserver调试运行中的程序</li>
+          </ol>
+          <p>
+            第一种的执行命令如下：<em>gdbserver 192.168.253.130:2333 test</em>,执行过此命令后，会打印出如下信息：<br/>
+            Process /home/viistart/deb/test created; pid = 44450<br />
+            Listening on port 2333<br />
+            此时gdbserver监听端口2333等待来自gdb的连接。<br />
+            可通过如下方式使gdb连接gdbserver：首先输入<em>gdb</em>进入gdb命令输入窗口,然后输入<em>target remote 192.168.
+              253.130:2333</em>.此时如果成功连接gdbserver，则gdbserver端会输出如下信息：<br />
+              Remote debugging from host 192.168.253.1, port 59728<br />
+            现在就可以在gdb命令输入窗口输入命令进行调试了。
+          </p>
+          <p>
+            第二种调试方式，是当我们想要远程调试一个运行中程序的方法。我们需要通过 <em>ps -aux | grep test</em>找出想要调试
+            的程序的pid。<br/>
+            viistart  44490  0.0  0.0   2308   824 pts/0    S+   21:49   0:00 ./test <br/>
+            然后通过下列命令启动gdbserver:<em>gdbserver --attach 192.168.253.130:2333 44490</em>.如果没有错误就可以等待gdb的
+            连接了。
+          </p>
+          <p>
+            如果调试过程中，想要浏览源代码。则源代码需要在gdb运行所在的目录。否则会提示找不到相关文件。
+          </p>
+          <p>2018年11月30日 21:54:39</p>
+        </article>
     </body>
 </html>

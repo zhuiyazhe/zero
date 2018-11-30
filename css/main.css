@@ -27,7 +27,7 @@ iframe {
     list-style: none;
 }
 #content_type li {
-    float: left;
+    float: right;
     margin-right: 10px;
 }
 
