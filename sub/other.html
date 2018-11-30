@@ -8,6 +8,7 @@
       <nav style="display:none">
           <ol id="navi">
               <li title="varNameThink">变量命名的思考</li>
+              <li title="funCall1"> 函数调用 </li>
           </ol>
       </nav>
       <section>
@@ -45,5 +46,20 @@
               <p>2018年11月28日 22:04:51</p>
           </article>
       </section>
+      <article>
+        <a name="funCall1" />
+        <header>2.关于函数调用的一些想法</header>
+        <p>
+          函数调用是最平常不过的一件事情，好像也没有什么好说的。可在程序出现过一个bug后，发现还是有一点要说的。
+          一个函数被调用的位置时候足够好，有可能影响这你的程序是否存在这潜在的bug。在写一个简单的a.html文件时，发现在
+          运行的时候突然出现了一个bug，就是该a.html中包含一个iframe标签，当iframe标签加载一个html后，iframe.onload事件
+          的js代码会自动从被加载的文件中读取部分内容然后写入到a.html中。原来处理方式是鼠标单击加载一个html文件，在单击的事件处理中，调用
+          一个清除函数，清除a.html中旧的内容。本来这种方式没有任何问题。可有一次按backspace回退到上一页面时，发现a.html中
+          旧的内容没有被清楚。最后查找发现按backspace按键时，只触发了iframe.onload事件进行加载内容，就跳过了清除函数的
+          调用。所以此处清除函数被调用的位置就不合理。最后，修改为在加载新内容的函数的第一行调用一次清除函数。这样就能
+          保证在加载新内容是肯定会清除旧的显示内容，也就不会在出现这样的bug了。
+        </p>
+        <p>2018年11月30日 22:22:47</p>
+      </article>
     </body>
 </html>
