@@ -17,16 +17,19 @@ var onNaviClick = function() {
 }
 
 var setIndexNavi = function() {
+
+  deleteAllChild(indexNavi);
+  
 	var tmp = indexIFrame.contentWindow.document.getElementById("navi");
     if(null == tmp)
         return;
-    
+
     console.log(tmp);
     var childElement = tmp.firstElementChild;
     while(null != childElement)
     {
         console.log(childElement);
-        
+
         var t = document.createElement("li");
         t.title = childElement.title;
         t.innerHTML = childElement.innerHTML;
@@ -38,11 +41,10 @@ var setIndexNavi = function() {
 
 var chooseContent = function() {
     console.log(this.title+".html");
-    
+
     iFrameSrcHtml = "sub/" + this.title + ".html";
     indexIFrame.src = iFrameSrcHtml;
-   
-    deleteAllChild(indexNavi);
+
 }
 
 
@@ -52,16 +54,15 @@ var installProcess = function() {
     var firstChild = contentType.firstElementChild;
     console.log(firstChild);
     firstChild.onclick = chooseContent;
-    
+
     for(var next = firstChild; next != null; next = next.nextElementSibling)
     {
     	next.onclick = chooseContent;
     }
-    
+
     indexIFrame = document.getElementById("content");
     indexIFrame.onload = setIndexNavi;
     indexNavi = document.getElementById("indexNavi");
 }
 
 installProcess();
-
