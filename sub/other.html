@@ -10,6 +10,7 @@
               <li title="varNameThink">变量命名的思考</li>
               <li title="funCall1"> 函数调用 </li>
               <li title="aLinuxDeploy">关于android安装linux</li>
+              <li title="deleteNode">关于列表节点的删除（引用的应用）</li>
           </ol>
       </nav>
       <section>
@@ -83,6 +84,46 @@
         </p>
         <p>
           2018年12月 2日 21:17:08
+        </p>
+      </article>
+      <article>
+        <a name="deleteNode" />
+        <header>4.关于列表节点的删除（引用的应用）</header>
+        <p>
+          如果我们有一个链表：A->B->C;我们想要删除其中的B节点。<br />
+          节点类型为
+          <code>
+            struct Node{int value; struct Node *next;}
+          </code>
+          <br />
+          第一种方法我们可以这样:<br />
+          <code>
+          bool deleteNode(struct Node *parent, stuct Node *deleteNode)<br />
+          {<br />
+            parent->next = deleteNode->next;<br />
+            delete deleteNode;<br />
+          }<br />
+        </code>
+        <br />
+        这样我们需要传两个参数，分别是要删除的节点，及该节点的父节点。如果只传递要删除的节点，我们就无法更新该
+        节点的父节点的next的值了。
+        <br />
+        另外一种方法是：<br />
+        <code>
+        bool deleteNode(struct Node *&deleteNode)<br />
+        {<br />
+            struct Node *tmp = deleteNode;<br />
+            deleteNode = deleteNode->next;<br />
+            delete tmp;<br />
+        }<br />
+      </code>
+      这样我们就只需要传递一个参数即可。
+      通过这样调用deleteNode(A->next);
+      我们在该函数中的实现中，就不必知道要删除的这个节点的父节点是什么，能稍微做些简化。<br />
+      这也是引用类型的一个简单的应用地方。
+        </p>
+        <p>
+          2018年12月 8日 21:31:36
         </p>
       </article>
     </body>
